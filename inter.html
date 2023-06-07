@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" src="https://kit.fontawesome.com/6478f529f2.js">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Raphael's Music Player</title>
+</head>
+<style>
+
+@import "reset.css";
+
+:root {
+    --main-black: rgba(0, 0, 0, 0.85);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    height: 100vh;
+    font-family: "Noto Serif KR", serif;
+    font-weight: 700;
+    background-image: url(./img/background.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.page_one{
+    width: 350px;
+    background-color: whitesmoke;
+    box-shadow: 0px 3px 30px 1px rgba(0, 0, 0, 0.3);
+    border-radius: 30px;
+    padding-top: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center; /*콘텐츠의 모든 요소를 가운데로 배치시킴*/
+}
+
+.page_one__header{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 80%;
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.7);
+    margin-bottom: 10px;
+}
+
+.page_one__main,
+.page_two__main {
+    width: 90%;
+}
+
+.main__singer_info_container {
+    width: 100%;
+    padding-top: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.singer-photo {
+    overflow: hidden;
+    width: 150px;
+    height: 150px;
+
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    box-shadow: 0px 3px 10px 1px rgba(0, 0, 0, 0.3);
+    margin-bottom: 20px;
+}
+.singer-photo img {
+    position: absolute;
+    top: 0px;
+    width: 150px;
+}
+
+.singer-name {
+    font-size: 25px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.singer-category {
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.main__shuffle_or_heart {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+
+.heart {
+    width: 170px;
+    height: 40px;
+    line-height: 150%;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 500;
+    color:rgb(3, 1, 1);
+    box-shadow: 0px 1px 5px 0.5px rgba(51, 26, 26, 0.2);
+    font-weight: 700;
+    margin-left: 10px;
+}
+
+.heart::before {
+    content: '';
+    color:red;
+}
+
+.fas fa-heart{
+    color:red;
+}
+.shuffle {
+    background-color: var(--main-black);
+    color: whitesmoke;
+    margin-right: 10px;
+    box-shadow: 0px 1px 5px 0.5px rgba(0, 0, 0, 0.2);
+}
+
+.main__playList {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.playList__song {
+    width: 90%;
+    height: 60px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 15px;
+    margin-bottom: 10px;
+}
+
+.playList__song:nth-child(2) {
+    box-shadow: 0px 1px 7px 0.2px rgba(0, 0, 0, 0.1);
+}
+
+.song__album {
+    margin-left: 10px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.song__album img {
+    width: 50px;
+    border-radius: 5px;
+}
+
+.song__play_icon_container {
+    position: absolute;
+    color: whitesmoke;
+}
+
+.song__album_info {
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-left: 10px;
+}
+
+.album_info__singer {
+    font-size: 13px;
+    margin-bottom: 10px;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.album_info__title {
+    font-size: 15px;
+}
+
+.song__ellipsis_container {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.main__controller {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    border-radius: 30px;
+    /* box-shadow: 0px 2px 10px 0.5px rgba(0, 0, 0, 0.3);
+    background-color: var(--main-black); */
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+audio{
+    width:270px;
+    height:50px;
+    border-radius: 30px;
+    box-shadow: 1px 1px 5px #8d8d8d;
+     /* background-color: aqua; */
+}
+.controller__playing {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+button{
+    width:200px;
+    height:45px;
+    box-shadow: 1px 1px 5px #8d8d8d;
+    border-radius: 30px;
+    border: 2px solid #b1b1b1;
+    color: #8d8d8d;
+    font-size: 18px;
+}
+button a{
+    text-decoration: none;
+    color: #8d8d8d;
+}
+button a:hover{
+    text-decoration: none;
+    color: #ffffff;
+}
+button:hover{
+    background-color: orangered;
+    box-shadow: 1px 1px 5px #8d8d8d;
+    border-radius: 30px;
+    border: 2px solid #b1b1b1;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.playing__singer {
+    font-size: 12px;
+    margin-bottom: 5px;
+    color: darkgrey;
+}
+
+.playing__title {
+    font-size: 14px;
+    color: whitesmoke;
+}
+
+.controller__btn {
+    font-size: 15px;
+    width: 30%;
+    color: whitesmoke;
+    margin-right: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+    </style>
+
+    <body>
+    <div class="page_one">
+
+        <header class="page_one__header">
+        <i class="fas fa-arrow-left"></i>
+        <i class="fas fa-search"></i>
+        </header>
+        <main class="page_one__main">
+        <div class="main__singer_info_container">
+            <div class="singer-photo">
+            <img src="./img/rocket.jpg"/>
+            </div>
+            <span class="singer-name">Gardians of the galaxy</span>
+            <span class="singer-category">Awesome mix vol.3</span>
+        </div>
+        <div class="main__shuffle_or_heart">
+
+            <div class="heart">
+            <i class="fas fa-heart"></i>
+            <span>&nbsp;&nbsp;&nbsp;391,234,000</span>
+            </div>
+        </div>
+
+        <div class="main__controller">
+            <div class="controller__playing">
+            <audio src="./audio/inthemeantime.mp4" controls></audio>
+            </div>
+        </div><!--main__controller-->
+        <div class="main__playList">
+            <div class="playList__song">
+            <div class="song__album">
+                <img src="./img/album1.jpg" />
+            </div>
+            <div class="song__album_info">
+                <span class="album_info__singer">SpaceHog</span>
+                <span class="album_info__title">In the Meantime</span>
+            </div>
+            <div class="song__ellipsis_container">
+                <i class="fas fa-ellipsis-v"></i>
+            </div>
+            </div>
+            <div class="playList__song">
+            <div class="song__album">
+                <img src="./img/album2.jpg" />
+                <div class="song__play_icon_container">
+                <i class="fas fa-play"></i>
+                </div>
+            </div>
+            <div class="song__album_info">
+                <span class="album_info__singer">Creep</span>
+                <span class="album_info__title">Radiohead</span>
+            </div>
+            <div class="song__ellipsis_container">
+                <i class="fas fa-ellipsis-v"></i>
+            </div>
+            </div>
+
+            <div class="playList__song">
+                <div class="song__album">
+                    <img src="./img/album3.jpg"/>
+                </div>
+
+                <div class="song__album_info">
+                    <span class="album_info__singer">Florence + The Machine</span>
+                    <span class="album_info__title">Dog Days Are Over</span>
+                </div>
+
+                <div class="song__ellipsis_container">
+                    <i class="fas fa-ellipsis-v"></i>
+                </div>
+            </div><!--playList__song-->
+
+        </div>
+
+        <!-- <div class="main__controller">
+            <div class="controller__playing">
+            <audio src="./audio/inthemeantime.mp4" controls></audio>
+            </div>
+        </div>main__controller -->
+
+        <div class="main__controller">
+            <div class="controller__playing">
+            <button><a href="index.html">Go to Website</a></button>
+            </div>
+        </div><!--main__controller-->
+
+        </main>
+    </div>
+
+    <!--이모티콘: 화살표, 돋보기, 하트-->
+    <script
+        src="https://kit.fontawesome.com/6478f529f2.js"
+        crossorigin="anonymous"
+    ></script>
+    </body>
+</html>
